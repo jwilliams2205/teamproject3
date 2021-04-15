@@ -7,11 +7,11 @@
   margin-bottom: 0px;
 }
 
-.alive{
+.box.alive{
   background-color: blue;
 }
 
-.dead{
+.box.dead{
   background-color: white;
 }
 

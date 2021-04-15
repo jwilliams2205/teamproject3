@@ -64,10 +64,11 @@ class Game extends React.Component{
 }
 
   selectBox = (i, j) =>{
-    var temp = this.mapGrid.map(array => array.slice());
+    var temp = this.state.stateGrid.map(array => array.slice());
     temp[i][j] = !temp[i][j];
+    console.log(temp[i][j]);
     this.setState({
-      mapGrid: temp
+      stateGrid: temp
     })
   }
 
