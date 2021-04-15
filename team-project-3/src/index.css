@@ -1,0 +1,28 @@
+.box{
+  display: inline-block;
+  border: 1px solid black;
+  width: 20px;
+  height: 20px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+}
+
+.alive{
+  background-color: blue;
+}
+
+.dead{
+  background-color: white;
+}
+
+.box:hover{
+  background-color: aqua;
+}
+
+.grid{
+  width: 150px;
+  line-height: 0;
+  margin: auto;
+  box-shadow: 0px 0px 20px grey;
+  margin-top: 20px;
+}
