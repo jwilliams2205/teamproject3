@@ -2,6 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+class ButtonRow extends React.Component{
+  render(){
+    return(
+      <div className = "all">
+        <button className = "btn" onClick = {this.props.randomize}>Randomize</button>
+        <button className = "btn" onClick = {this.props.reset}>Reset</button>
+        <button className = "btn" onClick = {this.props.startInfinite}>Start</button>
+        <button className = "btn" onClick = {this.props.stopInfinite}>Stop</button>
+        <button className = "btn" onClick = {this.props.oneIteration}>Iterate: 1</button>
+        <button className = "btn" onClick = {this.props.twentyThreeIteration}>Iterate: 23</button>
+      </div>
+    )
+  }
+}
+
 class Cell extends React.Component{
   selectCell = () =>{
     this.props.selectCell(this.props.row, this.props.col);
@@ -22,8 +37,8 @@ class Grid extends React.Component{
 
     var cellClass = "";
 
-    for(var i = 0; i < 20; i++){
-      for(var j = 0; j < 20; j++){
+    for(let i = 0; i < 20; i++){
+      for(let j = 0; j < 20; j++){
         var cellId =  i + "_" + j;
 
         if(this.props.stateGrid[i][j]){
@@ -60,6 +75,8 @@ class Game extends React.Component{
     this.rows = 20;
     this.columns = 20;
     this.mapGrid = [];
+    this.infiniteFlag = false;
+    this.numIterations = 0;
     for(var i = 0; i < 20; i++){
       this.mapGrid.push(Array.from(Array(20), ()=> false));
     }
@@ -70,7 +87,12 @@ class Game extends React.Component{
 
   randomize = () =>{
     var randomTemp = this.state.stateGrid.map(array => array.slice());
-    for(var i = 0; i < 100; i++){
+    for(var i = 0; i < 20; i++){
+      for(var j = 0; j < 20; j++){
+        randomTemp[i][j] = false;
+      }
+    }
+    for( i = 0; i < 100; i++){
       var iRand = Math.floor(Math.random()*20); //Create random i and j index to turn on for creating the seed.
       var jRand = Math.floor(Math.random()*20);
       if(randomTemp[iRand][jRand]){
@@ -78,6 +100,18 @@ class Game extends React.Component{
       }
       else{
         randomTemp[iRand][jRand] = true;
+      }
+    }
+    this.setState({
+      stateGrid: randomTemp
+    })
+  }
+
+  reset = () =>{
+    var randomTemp = this.state.stateGrid.map(array => array.slice());
+    for(let i = 0; i < 20; i++){
+      for(let j = 0; j < 20; j++){
+        randomTemp[i][j] = false;
       }
     }
     this.setState({
@@ -95,48 +129,106 @@ class Game extends React.Component{
   }
 
   oneGen = () =>{
-    var permutations = [
-      [0,1], [0,-1], [1,0], [-1,0], [1,1], [-1,1], [-1,-1], [1,-1]
-    ]
+    console.log("Function Called");
     var gameGrid = this.state.stateGrid.map(array => array.slice());
-    for(var i = 0; i < 20; i++){
-      for(var j = 0; j < 20; j++){
-        var popCount = 0;
-        //Rather than create a long list of if conditions, it seemed better to create an array of different neighbor permutations.
-        permutations.forEach(([iBox, jBox]) =>{
-          if(i+iBox >= 0 && i+iBox < 20 && j+jBox >= 0 && j+jBox < 20){
-            if(gameGrid[i+iBox][j+jBox] === true){
-              popCount++;
-            }
+    for(let i = 0; i < 20; i++){
+      for(let j = 0; j < 20; j++){
+        let popCount = 0;
+        //Let the ugliest code in history begin
+        if( (j-1) >= 0 && (j-1) < 20){
+          if(gameGrid[i][j-1]){
+            popCount++;
+        }
+        }
+        if( (j+1) >= 0 && (j+1) < 20){        
+          if(gameGrid[i][j+1]){
+          popCount++;
+        }}
+        if((i-1) >= 0 && (i-1) < 20){        
+          if(gameGrid[i-1][j]){
+          popCount++;
+        }}
+        if((i+1) >= 0 && (i+1) < 20){        
+          if(gameGrid[i+1][j]){
+          popCount++;
+        }}
+        if((i-1) >= 0 && (i-1) < 20 && (j-1) >= 0 && (j-1) < 20){
+          if(gameGrid[i-1][j-1]){
+            popCount++;
           }
-          if(popCount === 3 || popCount === 2){ //If popCount is in the inferval (2,3) => Set the box to true. 
-            gameGrid[i][j] = true;
+        }
+        if((i+1) >= 0 && (i+1) < 20 && (j+1) >= 0 && (j+1) < 20){
+          if(gameGrid[i+1][j+1]){
+            popCount++;
           }
-        });
+        }
+        if((i+1) >= 0 && (i+1) < 20 && (j-1) >= 0 && (j-1) < 20){        
+          if(gameGrid[i+1][j-1]){
+          popCount++;
+        }}
+        if((i-1) >= 0 && (i-1) < 20 && (j+1) >= 0 && (j+1) < 20){
+          if(gameGrid[i-1][j+1]){
+            popCount++;
+          }
+        }
+        if(popCount < 2 || popCount > 3){
+          gameGrid[i][j] = false;
+        }
+        else if(popCount === 3 && !gameGrid[i][j]){
+          console.log("popCount is " + popCount + " and gameGrid" + i + " " + j + " is " + gameGrid[i][j]);
+          gameGrid[i][j] = true;
+        }
       }
-    }
+      }
     this.setState({
       stateGrid: gameGrid
     });
   }
 
-  playIterations = (numIterations, infiniteFlag) => {
-    while(infiniteFlag){
+  playIterations = () => {
+    clearInterval(this.intervals);
+    var count = 0;
+    this.intervals = setInterval(() => {
       this.oneGen();
-    }
-    for(var i = numIterations; i > 0; i--){
-      this.oneGen();
-    }
+      if(++count === this.numIterations){
+        clearInterval(this.intervals);
+      }
+    }, 500);
   }
 
-  componentDidMount(){
-    this.randomize();
+  oneIteration = () => {
+    this.numIterations = 1;
+    this.playIterations();
   }
+
+  twentyThreeIteration = () => {
+    this.numIterations = 23;
+    this.playIterations();
+  }
+
+  startInfinite = () => {
+    this.numIterations = Infinity;
+    this.playIterations();
+  }
+
+  stopInfinite = () => {
+    clearInterval(this.intervals);
+  }
+
   render(){
     return(
       <div><header>Conway's Game of Life</header>
       <Grid stateGrid = {this.state.stateGrid} selectCell = {this.selectCell}
       />
+      <ButtonRow
+        randomize = {this.randomize}
+        reset = {this.reset}
+        startInfinite = {this.startInfinite}
+        stopInfinite = {this.stopInfinite}
+        oneIteration = {this.oneIteration}
+        twentyThreeIteration = {this.twentyThreeIteration}
+        
+        />
       </div>
     )
   }
