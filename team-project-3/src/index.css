@@ -1,4 +1,4 @@
-.box{
+.cell{
   display: inline-block;
   border: 1px solid black;
   width: 20px;
@@ -7,15 +7,15 @@
   margin-bottom: 0px;
 }
 
-.box.alive{
+.cell.alive{
   background-color: blue;
 }
 
-.box.dead{
+.cell.dead{
   background-color: white;
 }
 
-.box:hover{
+.cell:hover{
   background-color: aqua;
 }
 
