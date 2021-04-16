@@ -109,10 +109,10 @@ class Game extends React.Component{
               popCount++;
             }
           }
+          if(popCount === 3 || popCount === 2){ //If popCount is in the inferval (2,3) => Set the box to true. 
+            gameGrid[i][j] = true;
+          }
         });
-        if(popCount === 3 || popCount === 2){ //If popCount is in the inferval (2,3) => Set the box to true. 
-          gameGrid[i][j] = true;
-        }
       }
     }
     this.setState({
