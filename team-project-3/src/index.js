@@ -34,8 +34,7 @@ class Cell extends React.Component{
 
   render(){
     return(
-      <div className = {this.props.cellClass} id = {this.props.cellId}
-      onClick = {this.selectCell} />
+      <div className = {this.props.cellClass} onClick = {this.selectCell} />
     )
   }
 }
@@ -100,7 +99,7 @@ class Game extends React.Component{
         randomTemp[i][j] = false;
       }
     }
-    for( i = 0; i < 300; i++){
+    for( i = 0; i < 300; i++){ //300 random cells become alive.
       var iRand = Math.floor(Math.random()*30); //Create random i and j index to turn on for creating the seed.
       var jRand = Math.floor(Math.random()*30);
       if(randomTemp[iRand][jRand]){
