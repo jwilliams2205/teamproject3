@@ -137,7 +137,15 @@ class Game extends React.Component{
   }
 
   oneGen = () =>{
-    var gameGrid = this.state.stateGrid.map(array => array.slice());
+    /*
+    Tried this with one copy of the array and altering it from there, but that seemed to break it because of updates in the active generation
+    would cause errors in iterations further down the loop.
+    ie, if Array[i-1][j] was dead at the beginning of the generation but alive because of a conditional, Array[i][j] should not see that update
+    until after the generation completes.
+    */
+    let tempGrid = this.state.stateGrid.map(array => array.slice()); 
+    let gameGrid = this.state.stateGrid.map(array => array.slice()); 
+    console.log(gameGrid);
     for(let i = 0; i < 30; i++){
       for(let j = 0; j < 30; j++){
         let popCount = 0;
@@ -182,16 +190,16 @@ class Game extends React.Component{
           }
         }
         if(popCount < 2 || popCount > 3){
-          gameGrid[i][j] = false;
+          tempGrid[i][j] = false;
         }
         else if(popCount === 3 && !gameGrid[i][j]){
           console.log("popCount is " + popCount + " and gameGrid" + i + " " + j + " is " + gameGrid[i][j]);
-          gameGrid[i][j] = true;
+          tempGrid[i][j] = true;
         }
       }
       }
     this.setState({
-      stateGrid: gameGrid
+      stateGrid: tempGrid
     });
   }
 
@@ -280,7 +288,7 @@ class Game extends React.Component{
 
   render(){
     return(
-      <div className = "all"><header>Conway's Game of Life</header>
+      <div className = "all"><header><h1>Conway's Game of Life</h1></header>
       <Grid stateGrid = {this.state.stateGrid} selectCell = {this.selectCell}
       />
       <ButtonRow
