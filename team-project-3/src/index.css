@@ -1,8 +1,8 @@
 .cell{
   display: inline-block;
   border: 1px solid black;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin-left: 0px;
   margin-bottom: 0px;
 }
@@ -20,7 +20,7 @@
 }
 
 .grid{
-  width: 150px;
+  width: 1000px;
   line-height: 0;
   margin: auto;
   box-shadow: 0px 0px 20px grey;
@@ -34,7 +34,25 @@
 
 }
 
-.all{
+body{
   margin: auto;
   text-align: center;
+}
+
+.dropdownSelects{
+  display:none;
+  position: absolute;
+}
+
+.dropdown:hover .dropdownSelects{
+  display: block;
+}
+
+.dropdown{
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownSelects Button:hover{
+  background-color: aquamarine;
 }
