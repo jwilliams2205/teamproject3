@@ -58,8 +58,6 @@ class Grid extends React.Component{
         rowArray.push(
           <Cell
             cellClass = {cellClass}
-            row = {i}
-            col = {j}
             key = {'row' + i + 'col' + j}
             selectCell = {this.props.selectCell}
             />
