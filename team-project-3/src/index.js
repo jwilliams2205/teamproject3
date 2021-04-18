@@ -35,7 +35,7 @@ class Cell extends React.Component{
 
   render(){
     return(
-      <div className = {this.props.cellClass} onClick = {this.selectCell} />
+      <div className = {this.props.cellClass} onClick = {this.selectCell}/>
     )
   }
 }
@@ -59,7 +59,9 @@ class Grid extends React.Component{
         rowArray.push(
           <Cell
             cellClass = {cellClass}
-            key = {'row' + i + 'col' + j}
+            key = {Math.random()*0.5}
+            // Even though key isn't used for anything, it throws a warning if each
+            // element doesn't have a unique key.
             selectCell = {this.props.selectCell}
             />
         )
@@ -195,7 +197,6 @@ class Game extends React.Component{
           tempGrid[i][j] = false;
         }
         else if(popCount === 3 && !gameGrid[i][j]){
-          console.log("popCount is " + popCount + " and gameGrid" + i + " " + j + " is " + gameGrid[i][j]);
           tempGrid[i][j] = true;
         }
       }
