@@ -3,8 +3,7 @@
   border: 1px solid black;
   width: 15px;
   height: 15px;
-  margin-left: 0px;
-  margin-bottom: 0px;
+  margin: 0px;
 }
 
 .cell.alive{
@@ -23,15 +22,7 @@
   width: 1000px;
   line-height: 0;
   margin: auto;
-  box-shadow: 0px 0px 20px grey;
   margin-top: 20px;
-}
-
-.btn{
-  border-radius: 8px;
-  background-color: blueviolet;
-  color: white;
-
 }
 
 body{
