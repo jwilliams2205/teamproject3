@@ -88,12 +88,12 @@ class Game extends React.Component{
     this.columns = 30;
     this.mapGrid = [];
     //this.infiniteFlag = false;
-    this.numIterations = 0;
     for(let i = 0; i < this.rows; i++){
       this.mapGrid.push(Array.from(Array(this.columns), ()=> false));
     }
     this.state = {
-      stateGrid: this.mapGrid
+      stateGrid: this.mapGrid,
+      iterations: 0
     }
   }
 
@@ -153,7 +153,7 @@ class Game extends React.Component{
     */
     let tempGrid = this.state.stateGrid.map(array => array.slice()); 
     let gameGrid = this.state.stateGrid.map(array => array.slice()); 
-    console.log(gameGrid);
+    let incGenerations = this.state.iterations +1;
     for(let i = 0; i < this.rows; i++){
       for(let j = 0; j < this.columns; j++){
         let popCount = 0;
@@ -206,7 +206,8 @@ class Game extends React.Component{
       }
       }
     this.setState({
-      stateGrid: tempGrid
+      stateGrid: tempGrid,
+      iterations: incGenerations
     });
   }
 
@@ -324,6 +325,7 @@ class Game extends React.Component{
         theBeacon = {this.theBeacon}
         changeSize = {this.changeSize}
         />
+        <p>Generations: {this.state.iterations}</p>
       </div>
     )
   }
