@@ -1,4 +1,5 @@
 import React from "react";
+// import { Redirect } from 'react-router';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Register from './Register'
 import Login from './Login'
@@ -12,8 +13,10 @@ export default function App(){
                 <Route path = "/login"><Login/></Route>
                 <Route path = "/game"><GamePage/></Route>
                 <Route path = "/"><Register/></Route>
-                </Switch>
+                {/* <Redirect from="/" to="/game" />
+                {/* <Route exact path = "/game"><GamePage/></Route> */}
+            </Switch>
         </Router>
         </div>
     )
-}
+} 

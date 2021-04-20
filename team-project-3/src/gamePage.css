@@ -26,8 +26,14 @@
 }
 
 body{
-  margin: auto;
+  margin: 0 auto;
   text-align: center;
+  background-image: url("./assets/biology.jpg");
+}
+
+body img {
+  width: 100%;
+  height: 100%;
 }
 
 .dropdownSelects{
@@ -52,4 +58,89 @@ fieldset strong
 {
 	float: left;
 	width: 5em;
+}
+
+
+.goh {
+  width: 125px;
+  height: 35px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: rgba(17, 17, 17, 0.383);
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.goh:before {
+  content: '';
+  background: linear-gradient(45deg,	#0457ac, 	#308fac, 	#37bd79,#a7e237,#f4e604);
+  /* background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); */
+  position: absolute;
+  top: -2px;
+  left:-2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.goh:active {
+  color: #000
+}
+
+.goh:active:after {
+  background: transparent;
+}
+
+.goh:hover:before {
+  opacity: 1;
+}
+
+.goh:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 17, 17, 0.383);
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+.intro {
+  font-size: 20px;
+  width: 350px;
+  padding: 15em;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto; 
+}
+header {
+  padding-bottom: 3px;
+}
+
+h1 {
+  font-family: fantasy;
+  font-style: italic;
+  font-size: 40px;
+  margin-bottom: 1px;
+}
+
+.button-bar {
+  padding-top: 2em;
 }

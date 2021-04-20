@@ -46,7 +46,7 @@ class Login extends Component
     }
     render(){
         return(
-            <div>
+            <div className="intro">
             <form onSubmit = {this.onSubmit}>
                 <fieldset>
                 <legend>Login Form</legend>
