@@ -68,7 +68,7 @@ class Grid extends React.Component{
             // element doesn't have a unique key.
             selectCell = {this.props.selectCell}
           />
-        );//added colon
+        );//added semicolon
       } //fixed indention alignment
     }
 
