@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './gamePage.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom'
 
 class Register extends Component 
 {
@@ -43,7 +44,7 @@ class Register extends Component
 
         axios.post('http://localhost:3001/user/register', userPOST)
              .then(res => console.log(res.data));
-        
+        this.props.history.push('/login');
     }
  
     render(){
@@ -66,4 +67,4 @@ class Register extends Component
         )}
     }
 
-export default Register
+export default withRouter(Register)

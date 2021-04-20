@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './gamePage.css';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom'
 
 class Login extends Component 
 {
@@ -43,6 +43,8 @@ class Login extends Component
 
         axios.post('http://localhost:3001/user/login', userLogs)
             .then(res => console.log(res.data));
+
+        this.props.history.push('/game');
     }
     render(){
         return(
@@ -64,4 +66,4 @@ class Login extends Component
     }
 
 
-export default Login;
+export default withRouter(Login);
