@@ -48,7 +48,7 @@ class Register extends Component
  
     render(){
         return(
-            <div>
+            <div className="intro">
             <form onSubmit = {this.onSubmit}>
                 <fieldset>
                 <legend>Registration Form</legend>

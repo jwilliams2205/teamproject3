@@ -6,22 +6,22 @@ import Button from './Button.jsx';
 class ButtonRow extends React.Component{
   render(){
     return(
-      <div className = "all">
-        <Button variant = "contained" m={0.5} size = "small" color = "primary" onClick = {this.props.randomize}>Randomize</Button>
-        <Button variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.reset}>Reset</Button>
-        <Button variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.startInfinite}>Start</Button>
-        <Button variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.stopInfinite}>Stop</Button>
-        <Button variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.oneIteration}>Iterate: 1</Button>
-        <Button variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.twentyThreeIteration}>Iterate: 23</Button>
+      <div className = "button-bar">
+        <Button className="goh" variant = "contained" m={0.5} size = "small" color = "primary" onClick = {this.props.randomize}>Randomize</Button>
+        <Button className="goh" variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.reset}>Reset</Button>
+        <Button className="goh" variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.startInfinite}>Start</Button>
+        <Button className="goh" variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.stopInfinite}>Stop</Button>
+        <Button className="goh" variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.oneIteration}>Iterate: 1</Button>
+        <Button className="goh" variant = "contained" m={0.5} size = "small"  color = "primary" onClick = {this.props.twentyThreeIteration}>Iterate: 23</Button>
         <div className = "dropdown">
-          <Button variant = "contained" m={0.5} size = "small" color = "primary">Presets</Button>
+          <Button className="goh" variant = "contained" m={0.5} size = "small" color = "primary">Presets</Button>
           <div className = "dropdownSelects">
             <Button onClick = {this.props.theBlock}>The Block</Button>
             <Button onClick = {this.props.theBlinker}>The Blinker</Button>
             <Button onClick = {this.props.theBeacon}>The Beacon</Button>
           </div>
         </div><br/>
-        <Button variant = "contained" m={0.5} size = "small" color = "primary" onClick = {this.props.changeSize}>Change Size</Button>
+        <Button className="goh" variant = "contained" m={0.5} size = "small" color = "primary" onClick = {this.props.changeSize}>Change Size</Button>
       </div>
     )
   }
@@ -35,7 +35,7 @@ class Cell extends React.Component{
   render(){
     return(
       <div className = {this.props.cellClass} onClick = {this.selectCell}/>
-    )
+    ); /************************added semki colon, prob doesnt matter***************** */
   }
 }
 
@@ -46,8 +46,8 @@ class Grid extends React.Component{
     var cellSize = 17;
     var cellClass = "";
 
-    for(let i = 0; i < this.props.rows; i++){
-      for(let j = 0; j < this.props.columns; j++){
+    for(var i = 0; i < this.props.rows; i++){
+      for(var j = 0; j < this.props.columns; j++){
 
         if(this.props.stateGrid[i][j]){
           cellClass = "cell alive";
@@ -59,19 +59,24 @@ class Grid extends React.Component{
           <Cell
             cellClass = {cellClass}
             key = {Math.random()*0.5}
+            /*********************************Testing TL added **************/
+            row={i}
+            col={j}
+            /***************************   *************************************/
+
             // Even though key isn't used for anything, it throws a warning if each
             // element doesn't have a unique key.
             selectCell = {this.props.selectCell}
-            />
-        )
-      }
+          />
+        );//added semicolon, probably doesnt matter
+      } //fixed indention alignment
     }
 
     return(
       <div className = "grid" style = {{width:this.props.rows*cellSize}}>
         {rowArray}
       </div>
-    )
+    );
   }
 }
 
@@ -84,24 +89,24 @@ class Game extends React.Component{
     this.mapGrid = [];
     //this.infiniteFlag = false;
     this.numIterations = 0;
-    for(var i = 0; i < this.rows; i++){
+    for(let i = 0; i < this.rows; i++){
       this.mapGrid.push(Array.from(Array(this.columns), ()=> false));
     }
     this.state = {
       stateGrid: this.mapGrid
+    }
   }
-}
 
   randomize = () =>{
-    var randomTemp = this.state.stateGrid.map(array => array.slice());
-    for(var i = 0; i < this.rows; i++){
-      for(var j = 0; j < this.columns; j++){
+    let randomTemp = this.state.stateGrid.map(array => array.slice());
+    for(let i = 0; i < this.rows; i++){
+      for(let j = 0; j < this.columns; j++){
         randomTemp[i][j] = false;
       }
     }
-    for( i = 0; i < (this.rows*this.columns)/3; i++){ //30% of cells randomly become alive
-      var iRand = Math.floor(Math.random()*this.rows); //Create random i and j index to turn on for creating the seed.
-      var jRand = Math.floor(Math.random()*this.columns);
+    for(let i = 0; i < (this.rows*this.columns)/3; i++){ //30% of cells randomly become alive
+      let iRand = Math.floor(Math.random()*this.rows); //Create random i and j index to turn on for creating the seed.
+      let jRand = Math.floor(Math.random()*this.columns);
       if(randomTemp[iRand][jRand]){
         i--;
       }
@@ -121,8 +126,8 @@ class Game extends React.Component{
     //     randomTemp[i][j] = false;
     //   }
     // }
-    var tempGrid = []
-    for(var i = 0; i < this.rows; i++){
+    let tempGrid = []
+    for(let i = 0; i < this.rows; i++){
       tempGrid.push(Array.from(Array(this.columns), ()=> false));
     }
     this.setState({
@@ -131,7 +136,7 @@ class Game extends React.Component{
   }
 
   selectCell = (i, j) =>{
-    var temp = this.state.stateGrid.map(array => array.slice());
+    let temp = this.state.stateGrid.map(array => array.slice());
     temp[i][j] = !temp[i][j];
     console.log(temp[i][j]);
     this.setState({
@@ -236,13 +241,13 @@ class Game extends React.Component{
   }
 
   theBlock = () => {
-    var randomTemp = this.state.stateGrid.map(array => array.slice());
-    for(var i = 0; i < this.rows; i++){
-      for(var j = 0; j < this.columns; j++){
+    let randomTemp = this.state.stateGrid.map(array => array.slice());
+    for(let i = 0; i < this.rows; i++){
+      for(let j = 0; j < this.columns; j++){
         randomTemp[i][j] = false;
       }
     }
-    var baseCell = Math.floor(this.rows/2);
+    let baseCell = Math.floor(this.rows/2);
     randomTemp[baseCell][baseCell] = true;
     randomTemp[baseCell+1][baseCell] = true;
     randomTemp[baseCell][baseCell+1] = true;
@@ -253,13 +258,13 @@ class Game extends React.Component{
   }
 
   theBlinker = () => {
-    var randomTemp = this.state.stateGrid.map(array => array.slice());
-    for(var i = 0; i < this.rows; i++){
-      for(var j = 0; j < this.columns; j++){
+    let randomTemp = this.state.stateGrid.map(array => array.slice());
+    for(let i = 0; i < this.rows; i++){
+      for(let j = 0; j < this.columns; j++){
         randomTemp[i][j] = false;
       }
     }
-    var baseCell = Math.floor(this.rows/2);
+    let baseCell = Math.floor(this.rows/2);
     randomTemp[baseCell][baseCell] = true;
     randomTemp[baseCell+1][baseCell] = true;
     randomTemp[baseCell-1][baseCell] = true;
@@ -269,13 +274,13 @@ class Game extends React.Component{
   }
 
   theBeacon = () => {
-    var randomTemp = this.state.stateGrid.map(array => array.slice());
-    for(var i = 0; i < this.rows; i++){
-      for(var j = 0; j < this.columns; j++){
+    let randomTemp = this.state.stateGrid.map(array => array.slice());
+    for(let i = 0; i < this.rows; i++){
+      for(let j = 0; j < this.columns; j++){
         randomTemp[i][j] = false;
       }
     }
-    var baseCell = Math.floor(this.rows/2);
+    let baseCell = Math.floor(this.rows/2);
     randomTemp[baseCell][baseCell] = true;
     randomTemp[baseCell+1][baseCell] = true;
     randomTemp[baseCell][baseCell+1] = true;
@@ -301,7 +306,11 @@ class Game extends React.Component{
   render(){
     return(
       <div className = "all"><header><h1>Conway's Game of Life</h1></header>
-      <Grid stateGrid = {this.state.stateGrid} selectCell = {this.selectCell} rows = {this.rows} columns = {this.columns}
+      <Grid 
+        stateGrid = {this.state.stateGrid} 
+        selectCell = {this.selectCell} 
+        rows = {this.rows} 
+        columns = {this.columns}
       />
       <ButtonRow
         randomize = {this.randomize}
