@@ -35,7 +35,7 @@ class Cell extends React.Component{
   render(){
     return(
       <div className = {this.props.cellClass} onClick = {this.selectCell}/>
-    ); /************************ADDED COLON ***************** */
+    ); /************************added semki colon, prob doesnt matter***************** */
   }
 }
 
@@ -68,7 +68,7 @@ class Grid extends React.Component{
             // element doesn't have a unique key.
             selectCell = {this.props.selectCell}
           />
-        );//added semicolon
+        );//added semicolon, probably doesnt matter
       } //fixed indention alignment
     }
 
